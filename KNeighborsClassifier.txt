@@ -1,0 +1,40 @@
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+#from sklearn.neighbors import KNeighborsRegressor
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn import datasets
+
+data=datasets.load_iris()
+iris=datasets.load_iris()
+
+print(iris.data)
+print(iris.target)
+print(iris.target_names)
+print(iris.feature_names)
+x=iris.data
+y=iris.target
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=42)
+#model=KNeighborsClassifier(n_neighbors=5)
+#model=KNeighborsRegressor(n_neighbors=7)
+model=RandomForestClassifier(n_estimators=500)
+#model=GaussianNB()
+model.fit(x_train,y_train)
+y_pred=model.predict(x_test)
+print(y_pred)
+accuracy=accuracy_score(y_pred,y_test)
+print(accuracy)
+new_data = np.array([[2.9, 3.7, 2.5, 1.7], [3.2, 1.4, 2.6, 4.6]])
+new_pred = model.predict(new_data)
+print(new_pred)
+plt.plot(x_test,y_pred,color="red",label="predictive")
+plt.xlabel("Feature")
+plt.ylabel("Flower")
+plt.legend()
+plt.show()
